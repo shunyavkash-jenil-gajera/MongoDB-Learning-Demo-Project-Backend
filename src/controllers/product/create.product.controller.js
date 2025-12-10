@@ -6,7 +6,7 @@ import { asyncHandler } from "../../utils/asyncHandler.js";
 import { upload } from "../../utils/multer.js";
 
 export const createProduct = asyncHandler(async (req, res) => {
-  upload.single("image")(req, res, async (err) => {
+  upload.single("images")(req, res, async (err) => {
     if (err) throw new ApiError(400, err.message);
 
     const { name, price, description, category } = req.body;
