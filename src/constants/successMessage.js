@@ -18,4 +18,6 @@ export const SUCCESS_MSG = {
 
   ORDER_FETCHED: "Order fetched successfully.",
   ORDER_UPDATED: "Order updated successfully.",
+
+  CART_FETCHED: "Cart fetched successfully.",
 };

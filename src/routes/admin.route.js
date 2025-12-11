@@ -8,17 +8,12 @@ import {
 } from "../controllers/admin/index.admin.js";
 import { validate } from "../middlewares/validation.middleware.js";
 import { createSellerSchema } from "../validation/seller.validation.js";
-import use from "../errorHandler/globle.error.handler.js";
+
 const router = express.Router();
 
-router.get("/users", authMiddleware, isAdmin, use(getAllUsers));
-router.get("/sellers", authMiddleware, isAdmin, use(getAllSellers));
-router.put(
-  "/sellers/status",
-  authMiddleware,
-  isAdmin,
-  use(updateSellerIsActive)
-);
+router.get("/users", authMiddleware, isAdmin, getAllUsers);
+router.get("/sellers", authMiddleware, isAdmin, getAllSellers);
+router.put("/sellers/status", authMiddleware, isAdmin, updateSellerIsActive);
 router.post(
   "/sellers",
   validate(createSellerSchema),
@@ -28,3 +23,8 @@ router.post(
 );
 
 export default router;
+
+//today i worked on my demo project ,
+// deisgn and impliment product module pages , and after that ,
+// i added error handler and logger ,
+// and i improve folder structure on the backend

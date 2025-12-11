@@ -9,6 +9,9 @@ export const ERROR_MSG = {
   INVALID_TOKEN: "The token provided is invalid.",
   UNAUTHORIZED: "Unauthorized access.",
   INVALID_CREDENTIALS: "Invalid email or password.",
+  INVALID_PASSWORD: "Invalid password.",
+  USER_NOT_FOUND: "User not found with email",
+  INVALID_REQUEST_DATA: "Invalid request data.",
 
   PRODUCT_NOT_FOUND: "Product not found.",
   PRODUCT_CREATION_ERROR: "An error occurred while creating the product.",
@@ -21,4 +24,9 @@ export const ERROR_MSG = {
   SELLER_NOT_FOUND: "Seller not found.",
 
   ORDER_NOT_FOUND: "Order not found.",
+  INTERNAL_SERVER_ERROR: "Internal server error.",
+
+  IMAGES_REQUIRES: "Product images are required",
+
+  NOT_ADD_QUANTITY: "Cannot update quantity for this order status",
 };

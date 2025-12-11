@@ -5,20 +5,21 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import dotenv from "dotenv";
 import { ERROR_MSG } from "../constants/errorMessage.js";
+import {
+  Access_Token_Expiry,
+  Access_Token_Secret,
+  Refresh_Token_Expiry,
+  Refresh_Token_Secret,
+} from "../config/enverment.js";
 dotenv.config();
 
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-const refreshTokenSecret = process.env.REFRESH_TOKEN_SECRET;
-const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRY;
-const refreshTokenExpiry = process.env.REFRESH_TOKEN_EXPIRY;
-
 const generateAccessAndRefreshTokens = async ({ id, email }) => {
-  const accessToken = jwt.sign({ id, email }, accessTokenSecret, {
-    expiresIn: accessTokenExpiry,
+  const accessToken = jwt.sign({ id, email }, Access_Token_Secret, {
+    expiresIn: Access_Token_Expiry,
   });
 
-  const refreshToken = jwt.sign({ id, email }, refreshTokenSecret, {
-    expiresIn: refreshTokenExpiry,
+  const refreshToken = jwt.sign({ id, email }, Refresh_Token_Secret, {
+    expiresIn: Refresh_Token_Expiry,
   });
 
   return { accessToken, refreshToken };
@@ -32,10 +33,7 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
     throw new ApiError(401, ERROR_MSG.UNAUTHORIZED);
   }
   try {
-    const decodedToken = jwt.verify(
-      incomingRefreshToken,
-      process.env.REFRESH_TOKEN_SECRET
-    );
+    const decodedToken = jwt.verify(incomingRefreshToken, Refresh_Token_Secret);
 
     const user = await User.findById(decodedToken?._id);
 

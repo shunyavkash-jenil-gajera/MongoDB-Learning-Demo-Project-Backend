@@ -1,18 +1,27 @@
 import { SUCCESS_MSG } from "../../constants/successMessage.js";
 import { Order } from "../../schemas/order.schema.js";
-import { ApiResponse } from "../../utils/ApiResponse.js";
-import { asyncHandler } from "../../utils/asyncHandler.js";
+import { sendResponse } from "../../utils/responseUtil.js";
 
-export const createOrder = asyncHandler(async (req, res) => {
-  const { productId, quantity } = req.body;
-  const userId = req.user.id;
+export const createOrder = async (req, res) => {
+  try {
+    const { productId, quantity } = req.body;
+    const userId = req.user.id;
 
-  const order = new Order({
-    productId,
-    userId,
-    quantity,
-  });
+    const order = new Order({
+      productId,
+      userId,
+      quantity,
+    });
 
-  await order.save();
-  res.status(201).json(new ApiResponse(201, order, SUCCESS_MSG.ORDER_CREATED));
-});
+    await order.save();
+    return sendResponse(
+      res,
+      200,
+      order,
+      SUCCESS_MSG.ORDER_CREATED_SUCCESSFULLY
+    );
+  } catch (error) {
+    console.error("Create Order Error:", error.message || error);
+    return sendResponse(res, 500, "Internal Server Error");
+  }
+};

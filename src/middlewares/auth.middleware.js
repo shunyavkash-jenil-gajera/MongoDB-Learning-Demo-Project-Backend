@@ -1,14 +1,12 @@
+import { Access_Token_Secret } from "../config/enverment.js";
 import { User } from "../schemas/admin.schema.js";
 import { ApiError } from "../utils/ApiError.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import jwt from "jsonwebtoken";
-const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
 
 export const authMiddleware = asyncHandler(async (req, _, next) => {
   try {
-    const token =
-      req.cookies?.accessToken ||
-      req.header("Authorization")?.replace("Bearer ", "");
+    const token = req.header("Authorization")?.replace("Bearer ", "");
 
     console.log("Extracted token:", token);
     if (!token) {
@@ -20,7 +18,7 @@ export const authMiddleware = asyncHandler(async (req, _, next) => {
       throw new ApiError(401, "Unauthorized request: Malformed token");
     }
 
-    const decodedToken = jwt.verify(token, accessTokenSecret);
+    const decodedToken = jwt.verify(token, Access_Token_Secret);
 
     if (!decodedToken?.id) {
       console.error("Decoded token does not contain user ID:", decodedToken);

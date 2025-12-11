@@ -18,8 +18,8 @@ export const orderSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["pending", "shipped", "delivered", "canceled"],
-      default: "pending",
+      enum: [ "pending", "shipped", "delivered", "canceled"],
+      default: "addToCart",
     },
   },
   { timestamps: true }
